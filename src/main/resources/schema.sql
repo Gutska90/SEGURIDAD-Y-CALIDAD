@@ -24,37 +24,6 @@ CREATE TABLE IF NOT EXISTS USER_ROLES (
     FOREIGN KEY (role_id) REFERENCES ROLE(id)
 );
 
--- Tabla de maquinaria
-CREATE TABLE IF NOT EXISTS MACHINERY (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    type VARCHAR(100),
-    brand VARCHAR(100),
-    model VARCHAR(100),
-    year INTEGER,
-    location VARCHAR(255),
-    capacity INTEGER,
-    maintenance TEXT,
-    conditions TEXT,
-    payment_methods VARCHAR(255),
-    price_per_day DOUBLE,
-    available_from DATE,
-    available_to DATE,
-    owner_id BIGINT,
-    FOREIGN KEY (owner_id) REFERENCES USERS(id)
-);
-
--- Tabla de reservas
-CREATE TABLE IF NOT EXISTS RESERVATION (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    machinery_id BIGINT,
-    renter_id BIGINT,
-    start_date DATE,
-    end_date DATE,
-    total_price DOUBLE,
-    FOREIGN KEY (machinery_id) REFERENCES MACHINERY(id),
-    FOREIGN KEY (renter_id) REFERENCES USERS(id)
-);
-
 -- Tabla de recetas
 CREATE TABLE IF NOT EXISTS recipes (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,

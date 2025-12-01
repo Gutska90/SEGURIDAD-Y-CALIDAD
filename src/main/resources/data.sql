@@ -4,9 +4,9 @@ INSERT INTO ROLE(name) VALUES ('ROLE_ADMIN');
 
 -- 3 usuarios de prueba (password igual al username para desarrollo)
 INSERT INTO USERS(id, name, username, email, password, enabled, address, phone, crops) VALUES
- (1,'Admin','admin','admin@agro.cl','admin',TRUE,'Santiago','+56 9 1111 1111','Trigo'),
- (2,'Juan Perez','juan','juan@agro.cl','juan',TRUE,'Rancagua','+56 9 2222 2222','Maíz'),
- (3,'Maria Lopez','maria','maria@agro.cl','maria',TRUE,'Talca','+56 9 3333 3333','Papás');
+ (1,'Admin','admin','admin@recetas.cl','admin',TRUE,'Santiago','+56 9 1111 1111','Trigo'),
+ (2,'Juan Perez','juan','juan@recetas.cl','juan',TRUE,'Rancagua','+56 9 2222 2222','Maíz'),
+ (3,'Maria Lopez','maria','maria@recetas.cl','maria',TRUE,'Talca','+56 9 3333 3333','Papás');
 
 -- Asignar roles
 INSERT INTO USER_ROLES(user_id, role_id) VALUES (1, 2); -- admin -> ROLE_ADMIN

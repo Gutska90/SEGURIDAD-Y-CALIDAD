@@ -4,9 +4,9 @@ import com.recetas.recetas.model.Receta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import jakarta.persistence.EntityManager;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,12 +14,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
 class RecetaRepositoryTest {
     
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
     
     @Autowired
     private RecetaRepository recetaRepository;
@@ -54,7 +54,8 @@ class RecetaRepositoryTest {
     @Test
     void testFindById() {
         // Arrange
-        entityManager.persistAndFlush(receta);
+        entityManager.persist(receta);
+        entityManager.flush();
         
         // Act
         Optional<Receta> resultado = recetaRepository.findById(receta.getId());
@@ -67,7 +68,8 @@ class RecetaRepositoryTest {
     @Test
     void testFindByNombreContainingIgnoreCase() {
         // Arrange
-        entityManager.persistAndFlush(receta);
+        entityManager.persist(receta);
+        entityManager.flush();
         
         // Act
         List<Receta> resultado = recetaRepository.findByNombreContainingIgnoreCase("paella");
@@ -80,7 +82,7 @@ class RecetaRepositoryTest {
     @Test
     void testFindTop6ByOrderByFechaCreacionDesc() {
         // Arrange
-        entityManager.persistAndFlush(receta);
+        entityManager.persist(receta);
         
         // Crear otra receta más antigua
         Receta receta2 = new Receta();
@@ -92,7 +94,8 @@ class RecetaRepositoryTest {
         receta2.setIngredientes("Tomate, pepino");
         receta2.setInstrucciones("Mezclar todo");
         receta2.setFechaCreacion(LocalDateTime.now().minusDays(1));
-        entityManager.persistAndFlush(receta2);
+        entityManager.persist(receta2);
+        entityManager.flush();
         
         // Act
         List<Receta> resultado = recetaRepository.findTop6ByOrderByFechaCreacionDesc();
@@ -103,4 +106,3 @@ class RecetaRepositoryTest {
         assertEquals("Paella Valenciana", resultado.get(0).getNombre());
     }
 }
-

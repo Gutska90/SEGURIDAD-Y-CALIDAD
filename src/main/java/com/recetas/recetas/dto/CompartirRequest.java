@@ -14,7 +14,9 @@ public class CompartirRequest {
     @NotBlank(message = "La plataforma es obligatoria")
     private String plataforma; // facebook, twitter, whatsapp, web, etc.
     
-    public CompartirRequest() {
+    public CompartirRequest(Long recetaId, String plataforma) {
+        this.recetaId = recetaId;
+        this.plataforma = plataforma;
     }
     
     public Long getRecetaId() {

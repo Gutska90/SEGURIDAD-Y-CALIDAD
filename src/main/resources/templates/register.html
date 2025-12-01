@@ -2,15 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Registrarse - AgroRent</title>
+  <title>Registrarse - Recetas</title>
   <link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
 <body>
 <header>
-  <h1>AgroRent</h1>
+  <h1>Recetas</h1>
   <nav>
     <a th:href="@{/}">Inicio</a>
-    <a th:href="@{/machinery}">Buscar Maquinaria</a>
+    <a th:href="@{/buscar}">Buscar Recetas</a>
     <a th:href="@{/login}">Ingresar</a>
     <a th:href="@{/register}">Registrarse</a>
   </nav>
@@ -20,7 +20,7 @@
   <section class="auth-section">
     <div class="auth-container">
       <h2>Crear Cuenta</h2>
-      <p class="auth-description">Únete a AgroRent y comienza a arrendar o publicar maquinaria agrícola.</p>
+      <p class="auth-description">Únete a Recetas y comparte tus recetas favoritas.</p>
       
       <div th:if="${error}" class="error-message">
         <p th:text="${error}"></p>
@@ -63,6 +63,6 @@
   </section>
 </main>
 
-<footer>© 2025 AgroRent</footer>
+<footer>© 2025 Recetas</footer>
 </body>
 </html>

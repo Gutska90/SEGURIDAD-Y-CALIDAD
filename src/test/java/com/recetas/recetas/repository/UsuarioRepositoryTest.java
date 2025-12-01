@@ -5,10 +5,10 @@ import com.recetas.recetas.model.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import jakarta.persistence.EntityManager;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -16,12 +16,12 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
 class UsuarioRepositoryTest {
     
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
     
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -35,7 +35,8 @@ class UsuarioRepositoryTest {
         // Crear rol
         roleUser = new Role();
         roleUser.setNombre("ROLE_USER");
-        entityManager.persistAndFlush(roleUser);
+        entityManager.persist(roleUser);
+        entityManager.flush(); 
         
         // Crear usuario de prueba
         usuario = new Usuario();
@@ -53,7 +54,8 @@ class UsuarioRepositoryTest {
     @Test
     void testFindByUsername() {
         // Arrange
-        entityManager.persistAndFlush(usuario);
+        entityManager.persist(usuario);
+        entityManager.flush();
         
         // Act
         Optional<Usuario> resultado = usuarioRepository.findByUsername("testuser");
@@ -75,7 +77,8 @@ class UsuarioRepositoryTest {
     @Test
     void testFindByEmail() {
         // Arrange
-        entityManager.persistAndFlush(usuario);
+        entityManager.persist(usuario);
+        entityManager.flush();
         
         // Act
         Optional<Usuario> resultado = usuarioRepository.findByEmail("test@example.com");
@@ -96,4 +99,3 @@ class UsuarioRepositoryTest {
         assertEquals("testuser", guardado.getUsername());
     }
 }
-

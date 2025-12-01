@@ -7,10 +7,9 @@ import com.recetas.recetas.model.Valoracion;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
+import jakarta.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
@@ -18,12 +17,12 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
 class ValoracionRepositoryTest {
     
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
     
     @Autowired
     private ValoracionRepository valoracionRepository;
@@ -38,7 +37,7 @@ class ValoracionRepositoryTest {
         // Crear rol
         Role role = new Role();
         role.setNombre("ROLE_USER");
-        entityManager.persistAndFlush(role);
+        entityManager.persist(role);
         
         // Crear usuario
         usuario = new Usuario();
@@ -50,7 +49,7 @@ class ValoracionRepositoryTest {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         usuario.setRoles(roles);
-        entityManager.persistAndFlush(usuario);
+        entityManager.persist(usuario);
         
         // Crear receta
         receta = new Receta();
@@ -62,7 +61,9 @@ class ValoracionRepositoryTest {
         receta.setIngredientes("Arroz");
         receta.setInstrucciones("Cocinar");
         receta.setFechaCreacion(LocalDateTime.now());
-        entityManager.persistAndFlush(receta);
+        entityManager.persist(receta);
+        
+        entityManager.flush();
         
         // Crear valoración
         valoracion = new Valoracion();
@@ -86,7 +87,8 @@ class ValoracionRepositoryTest {
     @Test
     void testFindByRecetaIdAndUsuarioId() {
         // Arrange
-        entityManager.persistAndFlush(valoracion);
+        entityManager.persist(valoracion);
+        entityManager.flush();
         
         // Act
         Optional<Valoracion> resultado = valoracionRepository.findByRecetaIdAndUsuarioId(receta.getId(), usuario.getId());
@@ -99,7 +101,8 @@ class ValoracionRepositoryTest {
     @Test
     void testContarPorRecetaId() {
         // Arrange
-        entityManager.persistAndFlush(valoracion);
+        entityManager.persist(valoracion);
+        entityManager.flush();
         
         // Act
         long count = valoracionRepository.contarPorRecetaId(receta.getId());
@@ -108,4 +111,3 @@ class ValoracionRepositoryTest {
         assertEquals(1L, count);
     }
 }
-

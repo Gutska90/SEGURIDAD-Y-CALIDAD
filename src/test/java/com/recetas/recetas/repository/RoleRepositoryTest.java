@@ -3,20 +3,20 @@ package com.recetas.recetas.repository;
 import com.recetas.recetas.model.Role;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import jakarta.persistence.EntityManager;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
 class RoleRepositoryTest {
     
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
     
     @Autowired
     private RoleRepository roleRepository;
@@ -26,7 +26,8 @@ class RoleRepositoryTest {
         // Arrange
         Role role = new Role();
         role.setNombre("ROLE_USER");
-        entityManager.persistAndFlush(role);
+        entityManager.persist(role);
+        entityManager.flush(); 
         
         // Act
         Optional<Role> resultado = roleRepository.findByNombre("ROLE_USER");
@@ -60,4 +61,3 @@ class RoleRepositoryTest {
         assertEquals("ROLE_TEST", guardado.getNombre());
     }
 }
-

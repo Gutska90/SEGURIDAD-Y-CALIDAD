@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard - AgroRent</title>
+  <title>Dashboard - Recetas</title>
   <link rel="stylesheet" th:href="@{/css/main.css}" />
 </head>
 <body>
 <header>
-  <h1>AgroRent</h1>
+  <h1>Recetas</h1>
   <nav>
     <a th:href="@{/}">Inicio</a>
-    <a th:href="@{/machinery}">Buscar Maquinaria</a>
+    <a th:href="@{/buscar}">Buscar Recetas</a>
     <a th:href="@{/profile}">Mi Perfil</a>
-    <a th:href="@{/machinery/new}">Publicar Maquinaria</a>
+    <a th:href="@{/recetas/nueva}">Nueva Receta</a>
     <a th:href="@{/logout}">Cerrar Sesión</a>
   </nav>
 </header>
@@ -32,13 +32,13 @@
       <div class="dashboard-card">
         <h3>Publicar Maquinaria</h3>
         <p>Ofrece tu maquinaria agrícola para arriendo y genera ingresos adicionales.</p>
-        <a th:href="@{/machinery/new}" class="btn-primary">Nueva Publicación</a>
+        <a th:href="@{/recetas/nueva}" class="btn-primary">Nueva Receta</a>
       </div>
       
       <div class="dashboard-card">
-        <h3>Buscar Maquinaria</h3>
-        <p>Encuentra la maquinaria que necesitas para tus cultivos.</p>
-        <a th:href="@{/machinery}" class="btn-secondary">Buscar</a>
+        <h3>Buscar Recetas</h3>
+        <p>Encuentra las recetas que necesitas para cocinar.</p>
+        <a th:href="@{/buscar}" class="btn-secondary">Buscar</a>
       </div>
       
       <div class="dashboard-card">
@@ -51,14 +51,14 @@
     <div class="quick-actions">
       <h3>Acciones Rápidas</h3>
       <div class="action-buttons">
-        <a th:href="@{/machinery}" class="btn-outline">Buscar Maquinaria</a>
-        <a th:href="@{/machinery/new}" class="btn-outline">Publicar Maquinaria</a>
+        <a th:href="@{/buscar}" class="btn-outline">Buscar Recetas</a>
+        <a th:href="@{/recetas/nueva}" class="btn-outline">Nueva Receta</a>
         <a th:href="@{/profile}" class="btn-outline">Editar Perfil</a>
       </div>
     </div>
   </section>
 </main>
 
-<footer>© 2025 AgroRent</footer>
+<footer>© 2025 Recetas</footer>
 </body>
 </html>

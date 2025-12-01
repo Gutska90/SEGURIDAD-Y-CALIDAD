@@ -7,9 +7,9 @@ import com.recetas.recetas.model.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import jakarta.persistence.EntityManager;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -19,12 +19,12 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
 @ActiveProfiles("test")
 class ComentarioRepositoryTest {
     
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
     
     @Autowired
     private ComentarioRepository comentarioRepository;
@@ -38,7 +38,7 @@ class ComentarioRepositoryTest {
         // Crear rol
         Role role = new Role();
         role.setNombre("ROLE_USER");
-        entityManager.persistAndFlush(role);
+        entityManager.persist(role);
         
         // Crear usuario
         usuario = new Usuario();
@@ -50,7 +50,7 @@ class ComentarioRepositoryTest {
         Set<Role> roles = new HashSet<>();
         roles.add(role);
         usuario.setRoles(roles);
-        entityManager.persistAndFlush(usuario);
+        entityManager.persist(usuario);
         
         // Crear receta
         receta = new Receta();
@@ -62,7 +62,9 @@ class ComentarioRepositoryTest {
         receta.setIngredientes("Arroz");
         receta.setInstrucciones("Cocinar");
         receta.setFechaCreacion(LocalDateTime.now());
-        entityManager.persistAndFlush(receta);
+        entityManager.persist(receta);
+        
+        entityManager.flush();
         
         // Crear comentario
         comentario = new Comentario();
@@ -86,7 +88,8 @@ class ComentarioRepositoryTest {
     @Test
     void testFindByRecetaIdOrderByFechaCreacionDesc() {
         // Arrange
-        entityManager.persistAndFlush(comentario);
+        entityManager.persist(comentario);
+        entityManager.flush();
         
         // Act
         List<Comentario> resultado = comentarioRepository.findByRecetaIdOrderByFechaCreacionDesc(receta.getId());
@@ -99,7 +102,8 @@ class ComentarioRepositoryTest {
     @Test
     void testCountByRecetaId() {
         // Arrange
-        entityManager.persistAndFlush(comentario);
+        entityManager.persist(comentario);
+        entityManager.flush();
         
         // Act
         long count = comentarioRepository.countByRecetaId(receta.getId());
@@ -111,7 +115,8 @@ class ComentarioRepositoryTest {
     @Test
     void testFindByIdAndUsuarioId() {
         // Arrange
-        entityManager.persistAndFlush(comentario);
+        entityManager.persist(comentario);
+        entityManager.flush();
         
         // Act
         Optional<Comentario> resultado = comentarioRepository.findByIdAndUsuarioId(comentario.getId(), usuario.getId());
@@ -121,4 +126,3 @@ class ComentarioRepositoryTest {
         assertEquals(comentario.getId(), resultado.get().getId());
     }
 }
-
